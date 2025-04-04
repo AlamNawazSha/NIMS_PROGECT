@@ -112,8 +112,8 @@ if (isset($_POST['place_order'])) {
     }
 
     unset($_SESSION['cart']);
-    echo "<script>alert('Order placed successfully!'); window.location.href='cart.php';</script>";
-    exit;
+    header("Location: order_success.php");
+    exit();
 }
 
 ?>

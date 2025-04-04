@@ -160,10 +160,117 @@ td img {
 .form-container button:hover {
     opacity: 0.8;
 }
+        /* Navbar */
+        .navbar {
+            background-color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            background: #28a745;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .nav-buttons a.logout {
+            background-color: #dc3545;
+        }
+
+        .nav-buttons a.logout:hover {
+            background-color: #c82333;
+        }
+
+        .nav-buttons a.home {
+            background-color: #007bff;
+        }
+
+        .nav-buttons a.home:hover {
+            background-color: #0056b3;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .button {
+            display: block;
+            width: 240px;
+            padding: 12px;
+            margin: 20px auto;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .button:hover {
+            background: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
     </style>
 </head>
 <body>
+
+<div class="navbar">
+        <h1>🍽️ Admin Dashboard</h1>
+        <div class="nav-buttons">
+            <a href="manage_menu.php">Menu</a>
+            <a href="admin_bookings.php">Bookings</a>
+            <a href="admin_orders.php">Orders</a>
+            <a href="admin_logout.php" class="logout">Logout</a>
+        </div>
+    </div>
+    
 <div class="form-container">
     <h2>Add Menu Item</h2>
     <form method="POST" enctype="multipart/form-data">

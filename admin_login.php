@@ -2,6 +2,11 @@
 session_start();
 include "config.php"; // Database connection
 
+// Prevent browser back after login
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -47,11 +52,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             box-shadow: 0px 0px 10px 0px #000000;
             text-align: center;
+            border-radius: 10px;
         }
         input {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
         .button {
             width: 85%;
@@ -60,6 +68,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background: #218838;
+        }
+        .add-admin-link {
+            margin-top: 10px;
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .add-admin-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -73,6 +95,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit" class="button">Login</button>
     </form>
     <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
+
+    <!-- Link to add new admin -->
+    <a href="add_admin.php" class="add-admin-link">➕ Add New Admin</a>
 </div>
 
 </body>

@@ -204,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['book_table'])) {
             <a href="notifications.php" class="navbar-link hover-underline">
               <div class="separator"></div>
 
-              <span class="span">View Notifications</span>
+              <span class="span">Notifications</span>
             </a>
           </li>
 
@@ -1159,8 +1159,18 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- 
     - ionicon link
   -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+   <!-- Modern Browsers (Module) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+<!-- Legacy Browsers (No Module) -->
+<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script>
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1); // Prevent going back
+    };
+</script>
 
 </body>
 

@@ -8,6 +8,18 @@ if (!isset($_SESSION['user_id'])) {
 include 'config.php';
 $user_id = $_SESSION['user_id'];
 
+// Handle delete requests
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['delete_table_notification'])) {
+        $stmt = $pdo->prepare("DELETE FROM notifications WHERE id = ? AND user_id = ?");
+        $stmt->execute([$_POST['notification_id'], $user_id]);
+    }
+    if (isset($_POST['delete_order_notification'])) {
+        $stmt = $pdo->prepare("DELETE FROM order_notifications WHERE id = ? AND user_id = ?");
+        $stmt->execute([$_POST['notification_id'], $user_id]);
+    }
+}
+
 // Mark table notifications as read
 $pdo->prepare("UPDATE notifications SET is_read = 1 WHERE user_id = ?")->execute([$user_id]);
 
@@ -59,6 +71,7 @@ $order_notifications = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             background: #f9fbfc;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
         }
         .notification .message {
             font-size: 16px;
@@ -83,6 +96,21 @@ $order_notifications = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             color: #777;
             font-size: 12px;
         }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background: #c82333;
+        }
         .section {
             margin-bottom: 40px;
         }
@@ -99,6 +127,10 @@ $order_notifications = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
                 <?php foreach ($table_notifications as $note): ?>
                     <div class="notification">
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="notification_id" value="<?= $note['id'] ?>">
+                            <button type="submit" name="delete_table_notification" class="delete-btn">&times;</button>
+                        </form>
                         <div class="message"><?= htmlspecialchars($note['message']) ?></div>
                         <div class="status status-<?= htmlspecialchars($note['status']) ?>">
                             Status: <?= htmlspecialchars($note['status']) ?>
@@ -116,6 +148,10 @@ $order_notifications = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
                 <?php foreach ($order_notifications as $note): ?>
                     <div class="notification">
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="notification_id" value="<?= $note['id'] ?>">
+                            <button type="submit" name="delete_order_notification" class="delete-btn">&times;</button>
+                        </form>
                         <div class="message"><?= htmlspecialchars($note['message']) ?></div>
                         <div class="status status-<?= htmlspecialchars($note['status']) ?>">
                             Status: <?= htmlspecialchars($note['status']) ?>

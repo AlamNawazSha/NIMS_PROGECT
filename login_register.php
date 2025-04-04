@@ -19,16 +19,15 @@ if (isset($_POST['register'])) {
     $stmt->bind_param("sssss", $name, $email, $phone, $address, $password);
     
     if ($stmt->execute()) {
-        echo "<script>alert('Registration Successful!');</script>";
-        header("Location: home.php"); // Redirect to homepage
-            exit();
+        
+        echo "<script>alert('Registration Successful!'); window.location.href='home.php';</script>";
     } else {
-        echo "<script>alert('Email already exists!');</script>";
+        echo "<script>alert('Email already exists!'); window.location.href='index.php';</script>";
     }
 }
 
 // Login
-session_start();
+
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
