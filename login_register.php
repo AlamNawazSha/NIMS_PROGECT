@@ -1,0 +1,58 @@
+<?php
+session_start();
+$pdo = new mysqli("localhost", "root", "", "nimsdb");
+
+// Check connection
+if ($pdo->connect_error) {
+    die("Connection failed: " . $pdo->connect_error);
+}
+
+// Registration
+if (isset($_POST['register'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $name, $email, $phone, $address, $password);
+    
+    if ($stmt->execute()) {
+        echo "<script>alert('Registration Successful!');</script>";
+        header("Location: home.php"); // Redirect to homepage
+            exit();
+    } else {
+        echo "<script>alert('Email already exists!');</script>";
+    }
+}
+
+// Login
+session_start();
+include 'config.php';
+
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user['password'])) 
+    {
+        $_SESSION['user_id'] = $user['user_id'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['phone'] = $user['phone'];
+
+
+        header("Location: home.php");
+        exit();
+    } else {
+        echo "Invalid email or password.";
+    }
+}
+
+?>
+
+
