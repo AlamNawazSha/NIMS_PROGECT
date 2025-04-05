@@ -2,13 +2,44 @@
 session_start();
 include 'config.php';
 
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['delete_booking'])) {
+    $booking_id = $_POST['booking_id'];
+
+    // Get booking date and user ID first
+    $stmt = $pdo->prepare("SELECT user_id, date FROM table_bookings WHERE id = ?");
+    $stmt->execute([$booking_id]);
+    $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($booking) {
+        $user_id = $booking['user_id'];
+        $booking_date = $booking['date']; // format: YYYY-MM-DD
+
+        // Delete from notifications (based on user and date)
+        $stmt1 = $pdo->prepare("DELETE FROM notifications WHERE user_id = ? AND DATE(created_at) = ?");
+        $stmt1->execute([$user_id, $booking_date]);
+
+        // Delete from orders (based on user and date)
+        $stmt2 = $pdo->prepare("DELETE FROM orders WHERE user_id = ? AND DATE(created_at) = ?");
+        $stmt2->execute([$user_id, $booking_date]);
+
+        // Finally delete the booking
+        $stmt3 = $pdo->prepare("DELETE FROM table_bookings WHERE id = ?");
+        $stmt3->execute([$booking_id]);
+
+        echo "<script>alert('Booking, notifications, and orders deleted!'); location.href='admin_bookings.php';</script>";
+        exit();
+    }
+}
+
+
+
 // Fetch all bookings
 $bookings = $pdo->query("SELECT * FROM table_bookings ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 // Handle booking status update
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['update_status'])) {
     $booking_id = $_POST['booking_id'];
-    $status = $_POST['new_status']; // FIX: This was previously $_POST['status']
+    $status = $_POST['new_status'];
 
     // 1. Update booking status
     $stmt = $pdo->prepare("UPDATE table_bookings SET status = ? WHERE id = ?");
@@ -32,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['update_status'])) {
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
