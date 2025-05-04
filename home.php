@@ -10,7 +10,7 @@ include 'config.php';
 
 // Make sure user is logged in
 if (!isset($_SESSION['user_id'])) {
-    echo "<script>alert('You must be logged in to book a table.'); window.location.href = 'login_register.php';</script>";
+    echo "<script>alert('You must be logged in to Use the website.'); window.location.href = 'index.php';</script>";
     exit();
 }
 
@@ -654,22 +654,17 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
           <div class="form reservation-form bg-black-10">
             <!-- Booking Form -->
-<!-- <form method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="text" name="phone" placeholder="Phone Number" required>
-    <input type="number" name="guests" placeholder="Number of Guests" required>
-    <input type="date" name="date" required>
-    <input type="time" name="time" required>
-    <textarea name="message" placeholder="Special Request"></textarea>
-    <button type="submit" name="book_table">Book Table</button>
-</form> -->
+            <!-- <form method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="text" name="phone" placeholder="Phone Number" required>
+                <input type="number" name="guests" placeholder="Number of Guests" required>
+                <input type="date" name="date" required>
+                <input type="time" name="time" required>
+                <textarea name="message" placeholder="Special Request"></textarea>
+                <button type="submit" name="book_table">Book Table</button>
+            </form> -->
 
-<!-- Show Messages -->
-<?php if (!empty($success_message)) { ?>
-    <script>alert("<?= $success_message ?>");</script>
-<?php } elseif (!empty($error_message)) { ?>
-    <script>alert("<?= $error_message ?>");</script>
-<?php } ?>
+            
 
             <form action="" class="form-left" method="POST" name="booking-table">
 
@@ -681,9 +676,11 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
               </p>
 
               <div class="input-wrapper">
-                <input type="text" name="name" placeholder="Your Name" require autocomplete="on" class="input-field">
+                <input type="text" name="name" placeholder="Your Name" require autocomplete="on" class="input-field" required>
 
-                <input type="tel"name="phone" placeholder="Phone Number" require autocomplete="on" class="input-field">
+                <!-- <input type="tel"name="phone" placeholder="Phone Number" require autocomplete="on" class="input-field" required> -->
+                <input type="tel" name="phone" placeholder="Phone Number" pattern="\d{10}" maxlength="10" minlength="10" autocomplete="on" class="input-field" required title="Enter a valid 10-digit phone number">
+
               </div>
 
               <div class="input-wrapper">
@@ -691,7 +688,7 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="icon-wrapper">
                   <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
 
-                  <select  name="guests" require class="input-field">
+                  <select  name="guests" require class="input-field" required>
                     <option value="1-person">1 Person</option>
                     <option value="2-person">2 Person</option>
                     <option value="3-person">3 Person</option>
@@ -707,15 +704,27 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="icon-wrapper">
                   <ion-icon name="calendar-clear-outline" aria-hidden="true"></ion-icon>
 
-                  <input type="date" name="date" class="input-field">
+                  <input type="date" name="date" class="input-field"  id="datePicker" required>
 
                   <ion-icon name="chevron-down" aria-hidden="true"></ion-icon>
                 </div>
+                <script>
+                  const today = new Date();
+                  const maxDate = new Date();
+                  maxDate.setDate(today.getDate() + 30);
+
+                  const formattedToday = today.toISOString().split('T')[0];
+                  const formattedMax = maxDate.toISOString().split('T')[0];
+
+                  const dateInput = document.getElementById("datePicker");
+                  dateInput.setAttribute('min', formattedToday);
+                  dateInput.setAttribute('max', formattedMax);
+                </script>
 
                 <div class="icon-wrapper">
                   <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
 
-                  <select name="time" require class="input-field">
+                  <select name="time" require class="input-field" required>
                     <option value="08:00am">08 : 00 am</option>
                     <option value="09:00am">09 : 00 am</option>
                     <option value="010:00am">10 : 00 am</option>
@@ -738,7 +747,7 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
               </div>
 
-              <textarea name="message" placeholder="Describe your choice" autocomplete="off" class="input-field"></textarea>
+              <textarea name="message" placeholder="Describe your choice" autocomplete="off" class="input-field" required></textarea>
 
               <button type="submit" class="btn btn-secondary"  name="book_table">
                 <span class="text text-1">Book My Table</span>
@@ -1057,32 +1066,7 @@ $menu_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
           <p class="label-1">
             Subscribe us & Get <span class="span">25% Off.</span>
-          </p>
-
-          <form action="" class="input-wrapper" name="offer">
-            <div class="icon-wrapper">
-              <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-
-              <input type="email" name="email_address" placeholder="Your email" autocomplete="off" class="input-field">
-            </div>
-            
-
-            
-            <a  class="btn btn-secondary" onclick="showPopup()">
-             
-              <span class="text text-1">Subscribe</span>
-
-              <span class="text text-2" aria-hidden="true">Subscribe</span>
-              
-            </a>
-          
-          </form>
-          <div class="popup" id="popup">
-            <h2>Subscription Successful!</h2>
-            <p>Thank you for subscribing to our newsletter. Stay tuned for updates!</p>
-            <a  class="close-btn" onclick="closePopup()">Close</a>
-        </div>
-
+          </p>              
         </div>
 
         <ul class="footer-list">

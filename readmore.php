@@ -100,6 +100,95 @@
       
         <main>
           <article>  
+
+          <header class="header" data-header>
+              <div class="container">
+            <!-- we have to change the logo -->
+                <a href="#" class="logo">
+                  <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+                </a>
+
+                <nav class="navbar" data-navbar>
+
+                  <button class="close-btn" aria-label="close menu" data-nav-toggler>
+                    <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+                  </button>
+
+                  <a href="#" class="logo">
+                    <img src="./assets/images/logo.svg" width="160" height="50" alt="Grilli - Home">
+                  </a>
+
+                  <ul class="navbar-list">
+
+                    <li class="navbar-item">
+                      <a href="home.php" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+
+                        <span class="span">Home</span>
+                      </a>
+                    </li>
+                    
+                    <li class="navbar-item">
+                      <a href="cart.php" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+
+                        <span class="span">Cart</span>
+                      </a>
+                    </li>
+
+                    <!-- <a href="notifications.php">🔔 </a> -->
+
+                    
+                    <li class="navbar-item">
+                      <a href="notifications.php" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+
+                        <span class="span">Notifications</span>
+                      </a>
+                    </li>
+
+                    <li class="navbar-item">
+                      <a href="user_orders.php" class="navbar-link hover-underline">
+                        <div class="separator"></div>
+
+                        <span class="span">Your Orders</span>
+                      </a>
+                    </li>
+                  </ul>
+
+                  <div class="text-center">
+                    <p class="headline-1 navbar-title">Visit Us</p>
+
+                    <address class="body-4">
+                      Infantry Road, Bellary City, <br>
+                      Karnataka 5830101, India
+                    </address>
+
+                    <p class="body-4 navbar-text">Open: 9.30 am - 2.30pm</p>
+
+                    <a href="mailto:alamalam83802@grilli.com" class="body-4 sidebar-link">alamalam83802@grilli.com</a>
+
+                    <div class="separator"></div>
+
+                    <p class="contact-label">Booking Request</p>
+
+                    <a href="tel:+91-9590337483" class="body-1 contact-number hover-underline">
+                      +91-9590337483
+                    </a>
+                  </div>
+
+                </nav>
+
+                <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+                  <span class="line line-1"></span>
+                  <span class="line line-2"></span>
+                  <span class="line line-3"></span>
+                </button>
+
+                <div class="overlay" data-nav-toggler data-overlay></div>
+
+           </div>
+  </header>
             <!-- 
               - #ABOUT
             -->
@@ -201,31 +290,9 @@
                 <p class="title-1">Get News & Offers</p>
       
                 <p class="label-1">
-                  Subscribe us & Get <span class="span">25% Off.</span>
+                  Soon <span class="span">25% Off.</span>
                 </p>
       
-                <form action="" class="input-wrapper">
-                  <div class="icon-wrapper">
-                    <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-      
-                    <input type="email" name="email_address" placeholder="Your email" autocomplete="off" class="input-field">
-                  </div>
-      
-                  <a  class="btn btn-secondary" onclick="showPopup()">
-             
-                    <span class="text text-1">Subscribe</span>
-      
-                    <span class="text text-2" aria-hidden="true">Subscribe</span>
-                    
-                  </a>
-                
-                </form>
-                <div class="popup" id="popup">
-                  <h2>Subscription Successful!</h2>
-                  <p>Thank you for subscribing to our newsletter. Stay tuned for updates!</p>
-                  <a  class="close-btn" onclick="closePopup()">Close</a>
-              </div>
-              
               </div>
       
               <ul class="footer-list">

@@ -1,9 +1,6 @@
 
-
-/**
- * PRELOAD
- * 
- * loading will be end after document is loaded
+/*
+ loading will be end after document is loaded
  */
 
 const preloader = document.querySelector("[data-preaload]");
@@ -15,8 +12,8 @@ window.addEventListener("load", function () {
 
 
 
-/**
- * add event listener on multiple elements
+/*
+ add event listener on multiple elements
  */
 
 const addEventOnElements = function (elements, eventType, callback) {
@@ -27,8 +24,8 @@ const addEventOnElements = function (elements, eventType, callback) {
 
 
 
-/**
- * NAVBAR
+/*
+ NAVBAR
  */
 
 const navbar = document.querySelector("[data-navbar]");
@@ -45,8 +42,8 @@ addEventOnElements(navTogglers, "click", toggleNavbar);
 
 
 
-/**
- * HEADER & BACK TOP BTN
+/*
+ HEADER & BACK TOP BTN
  */
 
 const header = document.querySelector("[data-header]");
@@ -112,8 +109,8 @@ const slidePrev = function () {
 }
 
 heroSliderPrevBtn.addEventListener("click", slidePrev);
-/**
- * auto slide
+/*
+ auto slide
  */
 let autoSlideInterval;
 
@@ -130,8 +127,8 @@ addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseover", function
 addEventOnElements([heroSliderNextBtn, heroSliderPrevBtn], "mouseout", autoSlide);
 
 window.addEventListener("load", autoSlide);
-/**
- * PARALLAX EFFECT
+/*
+ PARALLAX EFFECT
  */
 const parallaxItems = document.querySelectorAll("[data-parallax-item]");
 
@@ -153,6 +150,7 @@ window.addEventListener("mousemove", function (event) {
   }
 
 });
+
 
 
 

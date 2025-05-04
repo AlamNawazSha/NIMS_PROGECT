@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         header("Location: home.php");
         exit();
     } else {
-        echo "Invalid email or password.";
+        echo "<script>alert('Invalid email or password..'); window.location.href = 'index.php';</script>";
+        exit();
     }
 }
 
