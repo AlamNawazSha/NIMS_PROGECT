@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2025 at 06:26 PM
+-- Generation Time: May 06, 2025 at 09:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,6 +57,30 @@ CREATE TABLE `cart` (
   `quantity` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `rating` int(11) NOT NULL CHECK (`rating` between 1 and 5),
+  `comment` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `item_id`, `username`, `rating`, `comment`, `created_at`) VALUES
+(1, 7, 'Guest', 2, 'hfvkjkjkr', '2025-05-04 08:20:56'),
+(2, 6, 'Guest', 4, 'this is the best chiken', '2025-05-04 08:42:01'),
+(3, 5, 'Guest', 3, 'this is good', '2025-05-04 08:43:54');
 
 -- --------------------------------------------------------
 
@@ -170,7 +194,10 @@ INSERT INTO `orders` (`id`, `user_id`, `user_name`, `user_phone`, `user_address`
 (14, 22, 'afzal2345', '815001706', 'c b bellary81500', 2000.00, 'Confirmed', '2025-04-04 23:33:17'),
 (15, 1, 'afzal2345', '815001706', 'c b bellary81500', 700.00, 'Delivered', '2025-04-05 08:14:36'),
 (17, 25, 'afzal2345', '815001706', 'c b bellary81500', 1500.00, 'cancelled', '2025-04-05 10:11:40'),
-(18, 25, 'afzal2395', '815001706', 'c b bellary81500', 100.00, 'Pending', '2025-04-05 10:18:08');
+(18, 25, 'afzal2395', '815001706', 'c b bellary81500', 100.00, 'cancelled', '2025-04-05 10:18:08'),
+(19, 2, 'afzal2395', '815001706', 'c b bellary81500', 2000.00, 'Delivered', '2025-04-25 22:33:30'),
+(20, 25, 'd', '0000000000', 'd', 1000.00, 'Delivered', '2025-05-04 15:12:33'),
+(21, 25, 's', '8888447774', 'sss', 100.00, 'Pending', '2025-05-04 15:46:27');
 
 -- --------------------------------------------------------
 
@@ -204,7 +231,10 @@ INSERT INTO `order_items` (`id`, `order_id`, `item_name`, `quantity`, `price`) V
 (16, 15, 'cold drink', 2, 100.00),
 (17, 15, 'CHIKEN', 1, 500.00),
 (19, 17, 'CHIKEN', 3, 500.00),
-(20, 18, 'ice', 1, 100.00);
+(20, 18, 'ice', 1, 100.00),
+(21, 19, 'bargur', 2, 1000.00),
+(22, 20, 'bargur', 1, 1000.00),
+(23, 21, 'ice', 1, 100.00);
 
 -- --------------------------------------------------------
 
@@ -243,7 +273,13 @@ INSERT INTO `order_notifications` (`id`, `user_id`, `type`, `message`, `status`,
 (35, 1, 'order', 'Your order #15 status has been updated to Confirmed.', 'read', '2025-04-05 02:45:51'),
 (36, 1, 'order', 'Your order #15 status has been updated to Out for Delivery.', 'read', '2025-04-05 02:46:42'),
 (37, 1, 'order', 'Your order #15 status has been updated to Delivered.', 'read', '2025-04-05 02:47:07'),
-(39, 25, 'order', 'Your order #17 status has been updated to Confirmed.', 'read', '2025-04-05 04:48:57');
+(39, 25, 'order', 'Your order #17 status has been updated to Confirmed.', 'read', '2025-04-05 04:48:57'),
+(40, 2, 'order', 'Your order #19 status has been updated to Confirmed.', 'read', '2025-04-25 17:04:24'),
+(41, 2, 'order', 'Your order #19 status has been updated to Out for Delivery.', 'read', '2025-04-25 17:05:10'),
+(42, 2, 'order', 'Your order #19 status has been updated to Delivered.', 'read', '2025-04-25 17:05:41'),
+(43, 25, 'order', 'Your order #20 status has been updated to Confirmed.', 'read', '2025-05-04 09:43:43'),
+(44, 25, 'order', 'Your order #20 status has been updated to Out for Delivery.', 'read', '2025-05-04 09:44:07'),
+(45, 25, 'order', 'Your order #20 status has been updated to Delivered.', 'unread', '2025-05-04 09:44:44');
 
 -- --------------------------------------------------------
 
@@ -276,7 +312,13 @@ INSERT INTO `table_bookings` (`id`, `user_id`, `name`, `phone`, `guests`, `date`
 (5, 2, 'fvf ', '54454211', 3, '2025-04-22', '01:00:00', '', 'Confirmed', '2025-04-04 11:28:15', 0),
 (6, 1, 'Alam Nawaz sha', '9590337483', 4, '2025-04-30', '12:00:00', '', 'Confirmed', '2025-04-04 15:21:56', 0),
 (7, 22, 'afzal', '8150011706', 7, '2025-04-10', '11:00:00', '', 'Confirmed', '2025-04-04 18:05:20', 0),
-(9, 25, 'alam nawaz', '22255555', 4, '2025-04-17', '11:00:00', '', 'Rejected', '2025-04-05 04:50:31', 0);
+(9, 25, 'alam nawaz', '22255555', 4, '2025-04-17', '11:00:00', '', 'Rejected', '2025-04-05 04:50:31', 0),
+(10, 27, 'alam', '9590337483', 2, '2025-05-08', '12:00:00', '', 'Pending', '2025-05-03 02:59:57', 0),
+(11, 27, 'alam', '9590', 1, '0000-00-00', '08:00:00', '', 'Pending', '2025-05-03 03:00:29', 0),
+(12, 27, 'alam', '9590', 1, '2025-05-15', '08:00:00', '', 'Pending', '2025-05-03 03:03:11', 0),
+(13, 27, 'alam', '9590', 1, '2025-05-15', '08:00:00', '', 'Pending', '2025-05-03 03:09:20', 0),
+(14, 27, 'al', '85', 1, '2025-05-13', '08:00:00', '', 'Pending', '2025-05-03 03:10:28', 0),
+(15, 27, 'alams', '7875758478', 3, '2025-06-03', '10:00:00', '', 'Pending', '2025-05-04 02:14:15', 0);
 
 -- --------------------------------------------------------
 
@@ -308,7 +350,10 @@ INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `phone`, `address`,
 (16, 'aaaaaaaab', 'bbb802@gmail.com', '$2y$10$wMsJP81WmsEFYGN2Ar.NAu.8GYdK72wdJ0FHxRIpkdPAXdOniGjqm', '00000001', 'Door No 65 Ward No 28, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
 (17, 'bbbb', 'alam83802@gmail.com', '$2y$10$CFCKnH7MdAqHtTeb2IjPYORZxfYYMrTSk8KZHRMyFheQF8zUFTIfi', '09590337483', 'Door No 63 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
 (22, 'afzal3', 'afzal383802@gmail.com', '$2y$10$VrlW7zxZRJYA42lXm3JxCO22wE1gXkyERqvbmkNnoMOj8xNxImSYS', '8150011703', 'Door No 83 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
-(25, 'nims', 'nims83802@gmail.com', '$2y$10$h5mYKAlII1QxYLkS20N17eZpubY4XaDp0mJnjKKy4a4HJq2pG0Toy', '8150011706', 'Door No 53 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL);
+(25, 'nims', 'nims83802@gmail.com', '$2y$10$h5mYKAlII1QxYLkS20N17eZpubY4XaDp0mJnjKKy4a4HJq2pG0Toy', '8150011706', 'Door No 53 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
+(26, 'annu', 'annu83802@gmail.com', '$2y$10$qAcGiavF5AgZqiPy7DnZuufUH0WeV1YLLASuUWNp4n9y0mHRamiDi', '8527419630', 'Door No 63 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
+(27, 'annu', 'afzal83802@gmail.com', '$2y$10$KG6Xo.3DPvaKNPpn1XTK5u2tDZAcYB../BQhzbdgup/4siQNCgoM.', '8527419630', 'Door No 63 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL),
+(28, 'shaaaaaaaaaaaaa', 'shaaaa83802@gmail.com', '$2y$10$Djpb/tf3snQskcogY79sge28ErTgvA5RyF7pbwRDvKLT7/rijNFZW', '8527419630', 'Door No 63 Ward No 24, Near Sai Baba Temple, Bellary, 583101, Bellary, Karnataka, India', 'user', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -328,6 +373,13 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `menu_id` (`menu_id`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_id` (`item_id`);
 
 --
 -- Indexes for table `menu`
@@ -397,6 +449,12 @@ ALTER TABLE `cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
@@ -418,31 +476,31 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `order_notifications`
 --
 ALTER TABLE `order_notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `table_bookings`
 --
 ALTER TABLE `table_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
@@ -454,6 +512,12 @@ ALTER TABLE `users`
 ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `menu` (`id`);
 
 --
 -- Constraints for table `notifications`
