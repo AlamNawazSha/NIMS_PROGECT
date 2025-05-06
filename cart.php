@@ -125,6 +125,8 @@ if (isset($_POST['place_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Cart</title>
+    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+
     <style>
         body { font-family: Arial, sans-serif; background-color: #f8f8f8; margin: 0; padding: 20px; }
         .cart-container { width: 80%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
@@ -140,7 +142,9 @@ if (isset($_POST['place_order'])) {
         .btn-remove { background-color: #FF5733; color: white; }
         .btn-place-order { background-color: #007BFF; color: white; font-size: 16px; }
 
-        <style>
+        </style>
+
+<style> 
 .cart-actions {
     background-color: #ffffff;
     padding: 30px;
@@ -217,7 +221,7 @@ if (isset($_POST['place_order'])) {
         <form method="post" action="cart.php">
     <div class="cart-actions">
         <input type="text" name="user_name" placeholder="Your Name" required>
-        <input type="text" name="user_phone" placeholder="Phone Number" required>
+        <input type="text" name="user_phone" placeholder="Phone Number" required pattern="\d{10}" maxlength="10" minlength="10" title="Enter a valid 10-digit phone number">
         <input type="text" name="user_address" placeholder="Delivery Address" required>
         <button type="submit" name="place_order" class="btn btn-place-order">Place Order</button>
     </div>
