@@ -203,9 +203,7 @@
                   <h2 class="headline-1 section-title">Every Fla vor Tells a Story</h2>
       
                   <p class="section-text">
-                    Lorem Ipsum is simply dummy text of the printingand typesetting industry lorem Ipsum has been the
-                    industrys standard dummy text ever since the when an unknown printer took a galley of type and scrambled
-                    it to make a type specimen book It has survived not only five centuries, but also the leap into.
+                  Welcome to our restaurant! We offer a simple and easy way for you to book a table online and enjoy a great dining experience.... you can even order your favorite food from the comfort of your home. Whether you're planning a family dinner, a date, or a group outing, you can reserve your table in just a few clicks. Our website helps you avoid waiting in line by letting you choose your preferred time and number of guests. We aim to provide you with the best service, delicious food, and a comfortable atmosphere. Enjoy a smooth,hassle free experience - book a table or order food online today..
                   </p>
                   <p class="section-text">
                     Lorem Ipsum is simply dummy text of the printingand typesetting industry lorem Ipsum has been the

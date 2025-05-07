@@ -12,6 +12,57 @@ header("Cache-Control: no-cache, no-store, must-revalidate");
 header("Pragma: no-cache");
 header("Expires: 0");
 ?>
+
+<!-- Analys -->
+
+<?php
+include 'config.php';
+
+// Total Orders
+$totalOrdersStmt = $pdo->prepare("SELECT COUNT(*) as total FROM orders");
+$totalOrdersStmt->execute();
+$totalOrders = $totalOrdersStmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+// Total Table Bookings
+$totalBookingsStmt = $pdo->prepare("SELECT COUNT(*) as total FROM table_bookings");
+$totalBookingsStmt->execute();
+$totalBookings = $totalBookingsStmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+// Most Frequently Ordered Item
+$topItemStmt = $pdo->prepare("
+    SELECT item_name, COUNT(*) AS item_count
+    FROM order_items
+    GROUP BY item_name
+    ORDER BY item_count DESC
+    LIMIT 1
+");
+$topItemStmt->execute();
+$topItem = $topItemStmt->fetch(PDO::FETCH_ASSOC);
+
+$topGuestsStmt = $pdo->prepare("
+    SELECT guests, COUNT(*) AS guest_count
+    FROM table_bookings
+    WHERE MONTH(date) = MONTH(CURRENT_DATE())
+      AND YEAR(date) = YEAR(CURRENT_DATE())
+      AND status = 'Confirmed'
+    GROUP BY guests
+    ORDER BY guest_count DESC
+    LIMIT 1
+");
+
+$topGuest = ['guests' => 'N/A', 'guest_count' => 0]; // default
+
+if ($topGuestsStmt->execute()) {
+    $result = $topGuestsStmt->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+        $topGuest = $result;
+    }
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -117,9 +168,70 @@ header("Expires: 0");
                 transform: translateY(0);
             }
         }
+
+/* Analys */
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px;
+}
+
+.card {
+  padding: 20px;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.total-orders {
+  background: linear-gradient(135deg, #36D1DC, #5B86E5);
+}
+
+.total-bookings {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+}
+
+.top-item {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+}
+
+.top-guests {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.card p {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.card small {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+
+        
     </style>
 </head>
 <body>
+
+
+
 
     <div class="navbar">
         <h1>🍽️ Admin Dashboard</h1>
@@ -131,6 +243,36 @@ header("Expires: 0");
             <a href="admin_logout.php" class="logout">Logout</a>
         </div>
     </div>
+
+    <div class="dashboard-cards">
+  <!-- Total Orders -->
+  <div class="card total-orders">
+    <h3>Total Orders</h3>
+    <p><?php echo $totalOrders; ?></p>
+  </div>
+
+  <!-- Total Table Bookings -->
+  <div class="card total-bookings">
+    <h3>Total Table Bookings</h3>
+    <p><?php echo $totalBookings; ?></p>
+  </div>
+
+  <!-- Most Frequently Ordered Item -->
+  <div class="card top-item">
+    <h3>Top Ordered Item</h3>
+    <p><?php echo $topItem['item_name']; ?></p>
+    <small>Ordered <?php echo $topItem['item_count']; ?> times</small>
+  </div>
+
+  <!-- Most Booked Guest Count -->
+  <div class="card top-guests">
+  <h3>Most Booked Guest Count</h3>
+  <p><?php echo htmlspecialchars($topGuest['guests']); ?> Guests</p>
+  <small>Booked <?php echo htmlspecialchars($topGuest['guest_count']); ?> times</small>
+</div>
+
+
+</div>
 
     <div class="container fade-in">
         <a href="manage_menu.php" class="button">Manage Menu</a>
